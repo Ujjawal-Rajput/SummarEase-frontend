@@ -1,0 +1,356 @@
+/* Base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+  background-color: rgb(249, 250, 251);
+}
+
+/* Sidebar styles */
+.sidebar {
+  width: 256px;
+  background-color: rgb(17, 24, 39);
+  transition: width 0.3s;
+  overflow: hidden;
+}
+
+.sidebar:not(.open) {
+  width: 0;
+}
+
+.new-chat-container {
+  padding: 1rem;
+}
+
+.new-chat-button {
+  margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  background-color: rgb(55, 65, 81);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.new-chat-button:hover {
+  background-color: rgb(75, 85, 99);
+}
+
+.chapters-container {
+  padding: 0 0.5rem;
+}
+
+.chapter-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  background: none;
+  color: rgb(209, 213, 219);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.2s;
+}
+
+.chapter-button:hover {
+  background-color: rgb(55, 65, 81);
+}
+
+/* Main content styles */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  height: 3rem;
+  border-bottom: 1px solid rgb(229, 231, 235);
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  background-color: white;
+}
+
+.menu-button {
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: rgb(75, 85, 99);
+  transition: background-color 0.2s;
+}
+
+.menu-button:hover {
+  background-color: rgb(243, 244, 246);
+}
+
+/* Messages area styles */
+.messages-area {
+  flex: 1;
+  overflow: auto;
+  padding: 1rem;
+}
+
+.empty-state {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-state-content {
+  text-align: center;
+  color: rgb(107, 114, 128);
+}
+
+.empty-state-content h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.messages-container {
+  
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.message-wrapper {
+  display: flex;
+}
+
+.message-wrapper.user-message {
+  justify-content: flex-end;
+}
+
+.message-wrapper.assistant-message {
+  justify-content: flex-start;
+}
+
+.message {
+  max-width: 70%;
+  padding: 1rem;
+  border-radius: 0.5rem;
+} 
+
+.user-message .message {
+  background-color: rgb(59, 130, 246);
+  color: white;
+}
+
+.assistant-message .message {
+  background-color: rgb(17, 24, 39);
+  color: #fff;
+  /* color: rgb(31, 41, 55); */
+}
+
+/* Input area styles */
+.input-area {
+  border-top: 1px solid rgb(229, 231, 235);
+  background-color: white;
+  padding: 1rem;
+}
+
+.input-form {
+  max-width: 48rem;
+  margin: 0 auto;
+  position: relative;
+}
+
+.message-input {
+  width: 100%;
+  padding: 1rem;
+  padding-right: 3rem;
+  border-radius: 0.5rem;
+  border: 2px solid rgb(58, 59, 60);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.message-input:focus {
+  border-color: rgb(59, 130, 246);
+  box-shadow: 0 0 0 1px rgb(59, 130, 246);
+}
+
+.send-button {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgb(156, 163, 175);
+  transition: color 0.2s;
+}
+
+.upload-button {
+  position: absolute;
+  right: 3rem;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgb(156, 163, 175);
+  transition: color 0.2s;
+}
+
+.send-button:hover,.upload-button:hover {
+  color: rgb(107, 114, 128);
+}
+
+#file-input {
+  display: none; /* Hide the default file input */
+}
+
+ 
+
+
+
+
+/* -----remove this drag and drop --------- */
+
+.upload-box {
+  width: 100%;
+  max-width: 500px;
+  height: 250px;
+  border: 2px dashed rgb(17, 24, 39);;
+  border-radius: 10px;
+  text-align: center;
+  padding: 40px;
+  background-color: #f9f9f9;
+  font-family: Arial, sans-serif;
+  transition: all 0.3s ease;
+}
+
+.upload-box.dragging {
+  background-color: #e9f5ff;
+  border-color: #0056b3;
+}
+
+.upload-icon {
+  font-size: 50px;
+}
+
+
+.upload-box p {
+  margin: 0px 0px 20px 0px;
+}
+
+.file-input {
+  display: none; /* Hide the default file input */
+}
+
+.file-upload-btn {
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.file-upload-btn:hover {
+  background-color: #0056b3;
+}
+
+
+
+
+
+
+
+
+
+.flashcard {
+  width: 350px;
+  max-height: 250px; /* Show only half the height initially */
+  border-radius: 15px;
+  color: white;
+  padding: 20px;
+  /* display: flex;
+  flex-direction: column; */
+  /* align-items: center;
+  justify-content: center; */
+  text-align: center;
+  transition: height 0.5s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  overflow: hidden;
+  position: relative; /* To position the download icon */
+  /* box-sizing: border-box; Ensure padding doesn't affect size calculation */
+}
+
+.flashcard.expanded {
+  max-height: none; /* Allow full expansion to show content */
+  transition: all 0.5s ease;
+}
+
+.flashcard:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.flashcard-heading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.flashcard-content {
+  font-size: 16px;
+  line-height: 1.5;
+  /* margin-bottom: 20px; */
+}
+
+.flashcard-image {
+  max-width: 100%;
+  max-height: 150px;
+  margin-top: 10px;
+}
+
+.arrow {
+  font-size: 30px;
+  margin-top: 10px;
+  transition: transform 0.3s ease;
+}
+
+.arrow.rotate {
+  transform: rotate(180deg); /* Rotate the arrow when expanded */
+}
+
+.download-icon {
+  background-color: #fff;
+  border: 1px solid black;
+  border-radius: 30%;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  width: 30px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+
