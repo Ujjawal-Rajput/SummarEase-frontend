@@ -1,18 +1,28 @@
-import SideBar from './Components/SideBar';
-import MainSection from './Components/MainSection';
-import Input from './Components/Input';
+import React, { Suspense } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Login from './Components/Login';
+import Signup from './Components/Signup';
+import ProtectedRoute from './Components/ProtectedRoute';
 import { RecoilRoot } from 'recoil';
-import './App.css';
+import NewChatPage from './Components/NewChatPage';
 
-function App() {
+// Lazy load the Dashboard component
+const Home = React.lazy(() => import('./Components/Home'));
+
+const App = () => {
   return (
-    <div className="app-container">
-      <RecoilRoot>
-        <SideBar/>
-        <MainSection/>
-      </RecoilRoot>
-    </div>
+    <RecoilRoot>
+      <BrowserRouter>
+        <Suspense fallback={<div>Loading...</div>}></Suspense>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/" element={<ProtectedRoute><NewChatPage /></ProtectedRoute>} />
+          <Route path="/c/:session_id" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        </Routes>
+      </BrowserRouter>
+    </RecoilRoot>
   );
-}
+};
 
 export default App;

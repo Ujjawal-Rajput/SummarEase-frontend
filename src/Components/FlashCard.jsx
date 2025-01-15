@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import '../App.css';
 import html2canvas from 'html2canvas';
 
 const FlashCard = () => {

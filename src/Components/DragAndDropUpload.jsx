@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '../App.css';
 
 const DragAndDropUpload = () => {
     const [dragging, setDragging] = useState(false);

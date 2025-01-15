@@ -48,6 +48,7 @@
 
 .chapters-container {
   padding: 0 0.5rem;
+  text-align: center;
 }
 
 .chapter-button {
@@ -63,6 +64,10 @@
   cursor: pointer;
   text-align: left;
   transition: background-color 0.2s;
+}
+
+.chapter-button a{
+  text-decoration: none;
 }
 
 .chapter-button:hover {
@@ -188,9 +193,8 @@
   box-shadow: 0 0 0 1px rgb(59, 130, 246);
 }
 
-.send-button {
+.input-buttons{
   position: absolute;
-  right: 0.75rem;
   top: 50%;
   transform: translateY(-50%);
   padding: 0.5rem;
@@ -199,26 +203,28 @@
   cursor: pointer;
   color: rgb(156, 163, 175);
   transition: color 0.2s;
+  
+}
+
+.send-button {
+  right: 0.75rem;
 }
 
 .upload-button {
-  position: absolute;
   right: 3rem;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 0.5rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: rgb(156, 163, 175);
-  transition: color 0.2s;
 }
+
+.microphone-button{
+  right: 5rem;
+}
+
+
 
 .send-button:hover,.upload-button:hover {
   color: rgb(107, 114, 128);
 }
 
-#file-input {
+#file-input, #audio-input{
   display: none; /* Hide the default file input */
 }
 
@@ -353,4 +359,10 @@
   transition: transform 0.3s ease;
 }
 
-
+.sessionError{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}

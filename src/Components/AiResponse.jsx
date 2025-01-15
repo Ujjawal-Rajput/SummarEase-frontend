@@ -19,7 +19,7 @@ const AiResponse = ({ response }) => {
     }, [currentIndex, response]);
 
     return (
-        <div style={{ padding: '1rem', lineHeight: '30px' }}>
+        <div style={{ lineHeight: '30px' }}>
             <ReactMarkdown
                 children={displayedText}
                 components={{
