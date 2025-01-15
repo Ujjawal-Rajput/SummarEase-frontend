@@ -47,8 +47,12 @@
 }
 
 .chapters-container {
-  padding: 0 0.5rem;
+  padding: 1rem 0.5rem;
   text-align: center;
+  /* position: fixed; */
+  bottom: 100px;
+  height: 250px; /* Or set a specific height if needed */
+  overflow-y: scroll;
 }
 
 .chapter-button {
@@ -98,6 +102,7 @@
   cursor: pointer;
   color: rgb(75, 85, 99);
   transition: background-color 0.2s;
+  height: 40px;
 }
 
 .menu-button:hover {
@@ -145,11 +150,12 @@
 }
 
 .message-wrapper.assistant-message {
+  margin-top: 10px;
   justify-content: flex-start;
 }
 
 .message {
-  max-width: 70%;
+  max-width: 70vw;
   padding: 1rem;
   border-radius: 0.5rem;
 } 

@@ -46,7 +46,7 @@ function Input() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
 
         // -------------------------------------------------------------
         //this code it optional because already disabled submit button
@@ -71,6 +71,7 @@ function Input() {
         // Create FormData
         const formData = new FormData();
         formData.append('message', inputValue);
+        formData.append('session_id', session_id);
         selectedFiles.forEach((file) => {
             formData.append("file", file); // Append each file with a unique key
         });
@@ -79,12 +80,22 @@ function Input() {
 
         // Save the new message and its response to the backend while fetching the same response 
         try {
+
+            const token = JSON.parse(localStorage.getItem('auth')).token; //{user: {email: "a@a.a", name: "a"}, token: "jwt-token"}
+
+            if (!token) {
+                throw new Error('Unauthorized');
+            }
             // https://summarease-backend.onrender.com/get-response
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/get-response`, {
                 method: 'POST',
+                headers: {
+                    'Authorization': token,
+                },
                 body: formData,
             });
 
+            
             const resp = await response.json();
             console.log(resp);
             // update state in recoil

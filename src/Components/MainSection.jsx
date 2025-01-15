@@ -18,8 +18,10 @@ function MainSection() {
                     onClick={() => setIsSidebarOpen((isSidebarOpen) => !isSidebarOpen)}
                     className="menu-button"
                 >
-                    <Menu size={20} />
+                    <Menu size={25} />
                 </button>
+
+                <h3>SummarEase</h3>
             </header>
 
             {/* <FlashCard /> */}

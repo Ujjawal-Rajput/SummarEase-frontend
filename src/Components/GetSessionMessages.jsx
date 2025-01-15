@@ -12,6 +12,7 @@ function GetSessionMessages() {
     const messagesEndRef = useRef(null);
     const [error, setError] = useState(null);
     const setCurrentSessionId = useSetRecoilState(currentSessionAtom);
+    const [loading, setLoading] = useState(false);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -24,6 +25,7 @@ function GetSessionMessages() {
     useEffect(() => {
         const fetchMessages = async () => {
             try {
+                setLoading(true);
                 const token = JSON.parse(localStorage.getItem('auth')).token; // Assuming the token is stored in localStorage
                 const response = await fetch(`${import.meta.env.VITE_API_URL}/c/${session_id}`, {
                     method: 'POST',
@@ -58,6 +60,8 @@ function GetSessionMessages() {
                     sessionId: null,
                     title: null
                 });
+            } finally {
+                setLoading(false); // Set loading to false after fetching
             }
         };
 
@@ -67,14 +71,23 @@ function GetSessionMessages() {
     }, [session_id, setMessages]);
 
 
+    if (loading) {
+        return (
+            <div className="loading-state">
+                <h2>Loading conversations...</h2>
+            </div>
+        );
+    }
+
+
     if (error) {
         return (
-        <div className="empty-state">
-            <div className="empty-state-content">
-                <h1 style={{ color: 'black' }}>{error}</h1>
-                <p>The session with the provided ID could not be found. Please check the session ID or try again later.</p>
+            <div className="empty-state">
+                <div className="empty-state-content">
+                    <h1 style={{ color: 'black' }}>{error}</h1>
+                    <p>The session with the provided ID could not be found. Please check the session ID or try again later.</p>
+                </div>
             </div>
-        </div>
         )  // Render the error page
     }
 
@@ -109,9 +122,13 @@ function GetSessionMessages() {
                             </div>
                         ))}
                     </div>
-                )}
+                )
+                }
+
 
                 <div ref={messagesEndRef} />
+
+
             </>
         )
     }

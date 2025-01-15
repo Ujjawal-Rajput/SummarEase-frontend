@@ -75,7 +75,7 @@ function SideBar() {
             
                 <button className="new-chat-button">
                     <Bot size={16} />
-                    <span>Ask Me Anything</span>
+                    <span>Ask Ai</span>
                 </button>
                 <button className="new-chat-button">
                     <Medal size={16} />
@@ -91,8 +91,8 @@ function SideBar() {
                 </button>
             </div>
 
-            <div className="chapters-container" style={{color:'#fff'}}>
                 <h3 style={{color:'#fff', marginLeft:'20PX'}}>Chats</h3>
+            <div className="chapters-container" style={{color:'#fff'}}>
                 <SidebarSessions/>
                 {/* {chapters.map((chapter) => (
                     <button key={chapter.id} className="chapter-button">
