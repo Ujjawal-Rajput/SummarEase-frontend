@@ -55,6 +55,10 @@
   overflow-y: scroll;
 }
 
+.chapters-container::-webkit-scrollbar {
+  display: none;
+}
+
 .chapter-button {
   width: 100%;
   display: flex;

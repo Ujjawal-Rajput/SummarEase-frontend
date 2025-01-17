@@ -7,5 +7,5 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
-  base:"/vite-react-deploy/"
+  base:"/SummarEase-frontend/"
 });
