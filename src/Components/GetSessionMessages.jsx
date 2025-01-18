@@ -15,7 +15,7 @@ function GetSessionMessages() {
     const [error, setError] = useState(null);
     const setCurrentSessionId = useSetRecoilState(currentSessionAtom);
     const [loading, setLoading] = useState(false);
-    const responseTopicValue = useRecoilValue(responseTopic);
+    // const responseTopicValue = useRecoilValue(responseTopic);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -43,6 +43,7 @@ function GetSessionMessages() {
                     // console.log(data)
 
                     setMessages(data.message || []); // Assuming messages are in the 'messages' field
+                    console.log(messages)
                     setCurrentSessionId({
                         sessionId: data.sessionId,
                         title: data.title
@@ -118,9 +119,9 @@ function GetSessionMessages() {
                                 </div>
                                 <div className="message-wrapper assistant-message">
                                     <div className="message">
-                                        {responseTopicValue === 'Quiz' && <Quiz response={message.response} /> }
-                                        {responseTopicValue === 'Flashcard' && <FlashCard response={message.response} /> }
-                                        {(responseTopicValue === 'Ask-ai' || responseTopicValue === 'Summarize' ) && <AiResponse response={message.response} /> }
+                                        {message.topic === 'Quiz' && <Quiz response={message.response} /> }
+                                        {message.topic === 'Flashcard' && <FlashCard response={message.response} /> }
+                                        {(message.topic === 'Ask-ai' || message.topic === 'Summarize' ) && <AiResponse response={message.response} /> }
                                         
                                     </div>
                                 </div>

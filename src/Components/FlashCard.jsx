@@ -1,9 +1,20 @@
 import React, { useState, useRef } from 'react';
 import html2canvas from 'html2canvas';
+// import ExtractJsonFromResponse from './ExtractJsonFromResponse';
 
 const FlashCard = ({ response }) => {
   const [expanded, setExpanded] = useState(false);
+  // const [cardData, setCardData] = useState([]);
   const flashcardRef = useRef();
+
+  //it set the data into cardData variable
+  // useEffect(() => {
+  //     // Call the function and store the result in state
+  //     const extractedJson = ExtractJsonFromResponse(response);
+  //     //need a different component for getting json of flashcard -> tommorrow
+  //     console.log(extractedJson);
+  //     setQuizData(extractedJson);
+  // }, [response]);
 
   // Generate random colors for each flashcard
   const generateRandomColor = () => {
