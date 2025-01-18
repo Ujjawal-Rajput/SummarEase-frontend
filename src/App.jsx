@@ -12,7 +12,7 @@ const Home = React.lazy(() => import('./Components/Home'));
 const App = () => {
   return (
     <RecoilRoot>
-      <BrowserRouter basename='/SummarEase-frontend'>
+      <BrowserRouter>
         <Suspense fallback={<div>Loading...</div>}></Suspense>
         <Routes>
           <Route path="/login" element={<Login />} />
