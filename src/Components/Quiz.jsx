@@ -59,11 +59,7 @@ function Quiz({ response }) {
       return (
         <div className="container">
           <div className="quiz-container">
-            {hasAnsweredAll && (
-              <div className="score-display">
-                Final Score: <span className="score-number">{score}</span> out of {totalQuestions}
-              </div>
-            )}
+
             {quizData.map((question) => (
               <div key={question.id} className="question-card">
                 <h2 className="question">{question.question}</h2>
@@ -86,6 +82,11 @@ function Quiz({ response }) {
                 </div>
               </div>
             ))}
+            {hasAnsweredAll && (
+              <div className="score-display">
+                Final Score: <span className="score-number">{score}</span> out of {totalQuestions}
+              </div>
+            )}
           </div>
         </div>
       );
