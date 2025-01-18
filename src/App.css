@@ -376,3 +376,9 @@
   align-items: center;
   color: black;
 }
+
+
+a{
+  color: rgb(17, 24, 39);
+  cursor: pointer;
+}
