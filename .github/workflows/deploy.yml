@@ -1,47 +1,38 @@
-name: Deploy
+name: Deploy Vite React App
 
 on:
   push:
     branches:
-      - main
+      - main  # Deploy when changes are pushed to the main branch
 
 jobs:
-  build:
-    name: Build
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      # Step 1: Checkout the code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node
+      # Step 2: Setup Node.js environment
+      - name: Setup Node.js
         uses: actions/setup-node@v3
+        with:
+          node-version: 16  # Ensure this matches your project
 
+      # Step 3: Install dependencies
       - name: Install dependencies
-        uses: bahmutov/npm-install@v1
+        run: npm install
 
-      - name: Build project
+      # Step 4: Inject environment variables from secrets
+      - name: Configure environment variables
+        run: echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
+
+      # Step 5: Build the project
+      - name: Build the project
         run: npm run build
 
-      - name: Upload production-ready build files
-        uses: actions/upload-artifact@v3
-        with:
-          name: production-files
-          path: ./dist
-
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: production-files
-          path: ./dist
-
+      # Step 6: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
