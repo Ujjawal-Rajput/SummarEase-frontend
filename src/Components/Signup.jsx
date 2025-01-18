@@ -55,7 +55,7 @@ const Signup = () => {
 
             </form>
             <p>
-                Already have an account? <a href="/login">Login</a>
+                Already have an account? <a onClick={()=>navigate('/login')}>Login</a>
             </p>
         </div>
     );
