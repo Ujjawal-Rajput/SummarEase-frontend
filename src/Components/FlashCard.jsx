@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import html2canvas from 'html2canvas';
 
-const FlashCard = () => {
+const FlashCard = ({ response }) => {
   const [expanded, setExpanded] = useState(false);
   const flashcardRef = useRef();
 
@@ -47,7 +47,7 @@ const FlashCard = () => {
           This is the content of the flashcard. It can contain text and an image. Click to expand and see more.
         </p>
         <img
-          src="https://via.placeholder.com/150"
+          src="#"
           alt="Placeholder"
           className="flashcard-image"
         />

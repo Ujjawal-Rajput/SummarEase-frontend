@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Send, Upload } from 'lucide-react';
+import { Send, Upload, Check } from 'lucide-react';
 import '../App.css';
-import { currentSessionAtom, messageResponseAtom } from '../Store/State';
+import { currentSessionAtom, messageResponseAtom, responseTopic } from '../Store/State';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import useSpeechToText from './useSpeechToText';
 import { Mic, Disc } from 'lucide-react';
@@ -11,10 +11,23 @@ function Input() {
     const [inputValue, setInputValue] = useState('');
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [messages, setMessages] = useRecoilState(messageResponseAtom);
+    const [selectedOption, setSelectedOption] = useRecoilState(responseTopic);
     const { transcript, isListening, startListening, stopListening } = useSpeechToText();
     const currentSessionId = useRecoilValue(currentSessionAtom);
     const { session_id } = useParams();
     // const [isListening, setIsListening] = useState(false);
+
+
+    const options = [
+        { id: 'Ask-ai', label: 'Ask ai' },
+        { id: 'Summarize', label: 'Summarize' },
+        { id: 'Flashcard', label: 'Flashcard' },
+        { id: 'Quiz', label: 'Quiz' },
+      ];
+
+    // useEffect(()=>{
+    //     setSelectedOption('1');
+    // },[])
 
     useEffect(() => {
         if (transcript) {
@@ -72,6 +85,7 @@ function Input() {
         const formData = new FormData();
         formData.append('message', inputValue);
         formData.append('session_id', session_id);
+        formData.append('topic', selectedOption);
         selectedFiles.forEach((file) => {
             formData.append("file", file); // Append each file with a unique key
         });
@@ -95,7 +109,7 @@ function Input() {
                 body: formData,
             });
 
-            
+
             const resp = await response.json();
             console.log(resp);
             // update state in recoil
@@ -113,6 +127,36 @@ function Input() {
     return (
         <div className="input-area">
             <form onSubmit={handleSubmit} className="input-form">
+
+
+
+                {/* -------------- */}
+                <div className="radioGroup">
+                    {options.map((option) => (
+                        <div key={option.id}>
+                            <input
+                                type="radio"
+                                id={option.id}
+                                name="options"
+                                value={option.id}
+                                checked={selectedOption === option.id}
+                                onChange={(e) => setSelectedOption(e.target.value)}
+                                className="radioInput"
+                            />
+                            <label htmlFor={option.id} className="radioLabel">
+                                <div className="checkCircle">
+                                    {selectedOption === option.id && (
+                                        <Check className="checkIcon" size={16} />
+                                    )}
+                                </div>
+                                <span className="radioText">{option.label}</span>
+                            </label>
+                        </div>
+                    ))}
+                </div>
+                {/* -------------- */}
+
+
                 <input
                     type="text"
                     name="message"

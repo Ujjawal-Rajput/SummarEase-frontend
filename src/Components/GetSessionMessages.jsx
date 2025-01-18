@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { currentSessionAtom, messageResponseAtom } from '../Store/State';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { currentSessionAtom, messageResponseAtom, responseTopic } from '../Store/State';
 import AiResponse from './AiResponse';
-import SessionNotFoundError from './SessionNotFoundError';
+import Quiz from './Quiz';
+import FlashCard from './FlashCard';
+
 
 function GetSessionMessages() {
     const { session_id } = useParams(); // Get session_id from URL
@@ -13,6 +15,7 @@ function GetSessionMessages() {
     const [error, setError] = useState(null);
     const setCurrentSessionId = useSetRecoilState(currentSessionAtom);
     const [loading, setLoading] = useState(false);
+    const responseTopicValue = useRecoilValue(responseTopic);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -115,8 +118,10 @@ function GetSessionMessages() {
                                 </div>
                                 <div className="message-wrapper assistant-message">
                                     <div className="message">
-                                        <AiResponse response={message.response} />
-
+                                        {responseTopicValue === 'Quiz' && <Quiz response={message.response} /> }
+                                        {responseTopicValue === 'Flashcard' && <FlashCard response={message.response} /> }
+                                        {(responseTopicValue === 'Ask-ai' || responseTopicValue === 'Summarize' ) && <AiResponse response={message.response} /> }
+                                        
                                     </div>
                                 </div>
                             </div>

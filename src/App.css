@@ -47,7 +47,7 @@
 }
 
 .chapters-container {
-  padding: 1rem 0.5rem;
+  padding: 0rem 1.3rem;
   text-align: center;
   /* position: fixed; */
   bottom: 100px;
@@ -57,6 +57,10 @@
 
 .chapters-container::-webkit-scrollbar {
   display: none;
+}
+
+ul li{
+  list-style: none;
 }
 
 .chapter-button {
@@ -205,7 +209,7 @@
 
 .input-buttons{
   position: absolute;
-  top: 50%;
+  top:75%;
   transform: translateY(-50%);
   padding: 0.5rem;
   background: none;
@@ -297,7 +301,7 @@
 
 
 
-
+/* ------------------flashcard */
 
 .flashcard {
   width: 350px;
@@ -381,4 +385,188 @@
 a{
   color: rgb(17, 24, 39);
   cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+/* ---------------Radio options in input */
+
+
+.radioGroup {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 10px;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  padding: 0.2rem 0.7rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  border: 1.5px solid #e5e7eb;
+  transition: all 0.2s ease;
+}
+
+.radioLabel:hover {
+  border-color: #bfdbfe;
+}
+
+.radioInput {
+  display: none;
+}
+
+.radioInput:checked + .radioLabel {
+  border-color: rgb(17, 24, 39);
+  background-color: #eff6ff;
+}
+
+.checkCircle {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 2px solid #d1d5db;
+  margin-right: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.radioInput:checked + .radioLabel .checkCircle {
+  background-color: rgb(17, 24, 39);
+  border-color: rgb(17, 24, 39);
+}
+
+.checkIcon {
+  color: white;
+}
+
+.radioText {
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+
+
+   
+
+
+
+
+
+/* ------------------Quiz */
+
+
+.quiz-container {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.question-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.question {
+  color: white;
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.option {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  color: white;
+  font-size: 0.875rem;
+}
+
+.option:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.option.selected {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.option.correct {
+  background-color: rgba(34, 197, 94, 0.2);
+  border-color: rgb(34, 197, 94);
+}
+
+.option.wrong {
+  background-color: rgba(239, 68, 68, 0.2);
+  border-color: rgb(239, 68, 68);
+}
+
+.option:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.check-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.check-icon.correct {
+  color: rgb(34, 197, 94);
+}
+
+.check-icon.wrong {
+  color: rgb(239, 68, 68);
+}
+
+.option-text {
+  font-size: 0.875rem;
+}
+
+.score-display {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  color: white;
+  text-align: center;
+  font-size: 1.125rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.score-number {
+  font-weight: 600;
+  color: rgb(34, 197, 94);
 }

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
-import { chaptersAtom, messageResponseAtom, currentSessionAtom } from '../Store/State';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { chaptersAtom, messageResponseAtom, currentSessionAtom, responseTopic } from '../Store/State';
 import { useLogout } from './LogoutHandler';
 
 const NewChatPage = () => {
@@ -9,6 +9,7 @@ const NewChatPage = () => {
     const setMessages = useSetRecoilState(messageResponseAtom);
     const setChapters = useSetRecoilState(chaptersAtom);
     const setCurrentSession = useSetRecoilState(currentSessionAtom);
+    const setResponseTopic = useSetRecoilState(responseTopic);
     const apiCalled = useRef(false); // To track if API call has been made
     const handleLogout = useLogout();
 
@@ -43,6 +44,7 @@ const NewChatPage = () => {
                 // Set current session and chapters
                 setCurrentSession(data.newSession);
                 setChapters(data.allSessions);
+                setResponseTopic('Ask-ai');
                 // Navigate to the new session page
                 navigate(`/c/${data.newSession.sessionId}`);
             } catch (error) {

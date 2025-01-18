@@ -57,7 +57,7 @@ const SidebarSessions = () => {
     },[]);
 
     return (
-        <div>
+        <div style={{borderLeft:'3px solid rgb(38, 50, 75)'}}>
             <ul>
                 {chapters && chapters.length > 0 ? (
                     chapters

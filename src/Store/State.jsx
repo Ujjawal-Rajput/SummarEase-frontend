@@ -22,6 +22,10 @@ export const authState = atom({
     ],
 });
 
+export const responseTopic = atom({
+    key: 'ResponseTopic', // Unique key for the atom
+    default: 'Ask-ai'
+});
 
 
 // export const authState = atom({
