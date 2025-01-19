@@ -69,7 +69,7 @@ const SidebarSessions = () => {
                                 > */}
                                     <button className={session.sessionId === activeSessionId ? 'chapter-button active-chapter' : 'chapter-button'} onClick={()=>navigate(`/c/${session.sessionId}`)}>
                                         <MessageSquare size={16} />
-                                        <span>{session.title}</span>
+                                        <span>{session.title.length > 20 ? session.title.slice(0, 20) + "..." : session.title }</span>
                                     </button>
                             </li>
                             // <li key={session.sessionId} className='chapter-button'>

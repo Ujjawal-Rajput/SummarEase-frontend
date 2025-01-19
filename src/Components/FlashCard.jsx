@@ -63,7 +63,7 @@ const FlashCard = ({ response, topic }) => {
             <ul>
               {card.description.map((option, optIndex) => (
                 <li key={optIndex}>
-                  <strong>{option.id}. </strong>
+                  <strong>{optIndex + 1}. </strong>
                   {option.text}
                 </li>
               ))}

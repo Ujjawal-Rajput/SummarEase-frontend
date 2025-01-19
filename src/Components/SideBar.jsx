@@ -79,7 +79,6 @@ function SideBar() {
     return (
         <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
             <div className="new-chat-container">
-
                 <button className="new-chat-button" onClick={handleNewChat}>
                     <Plus size={16} />
                     <span>New Chat</span>
@@ -89,12 +88,10 @@ function SideBar() {
 
 
                 {features.map((feature) => (
-                    <>
                         <button className="new-chat-button" onClick={()=>setResponseTopicValue(feature.id)} key={feature.id} style={responseTopicValue === feature.id ? { backgroundColor: 'transparent' } : {}}>
                             {feature.icon}
                             <span>{feature.label}</span>
                         </button>
-                    </>
                 ))}
             </div>
 

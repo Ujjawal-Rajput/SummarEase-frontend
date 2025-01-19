@@ -15,6 +15,7 @@ function Input() {
     const { transcript, isListening, startListening, stopListening } = useSpeechToText();
     const currentSessionId = useRecoilValue(currentSessionAtom);
     const { session_id } = useParams();
+    const [isLoading, setIsLoading] = useState(false);
     // const [isListening, setIsListening] = useState(false);
 
 
@@ -59,8 +60,7 @@ function Input() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-
+        
         // -------------------------------------------------------------
         //this code it optional because already disabled submit button
         if (session_id != currentSessionId.sessionId) {
@@ -68,6 +68,7 @@ function Input() {
             return;
         }
         // -------------------------------------------------------------
+        setIsLoading(true);
 
 
         if (!inputValue.trim()) return;
@@ -118,9 +119,11 @@ function Input() {
             // reset the useStates
             setInputValue('');
             setSelectedFiles([]);
+            setIsLoading(false);
 
         } catch (error) {
             console.error(error);
+            setIsLoading(false);
         }
     }
 
@@ -141,8 +144,8 @@ function Input() {
                                 value={option.id}
                                 checked={selectedOption === option.id}
                                 onChange={(e) => setSelectedOption(e.target.value)}
-                                className="radioInput"
-                            />
+                                className='radioInput'
+                                />
                             <label htmlFor={option.id} className="radioLabel">
                                 <div className="checkCircle">
                                     {selectedOption === option.id && (
@@ -163,29 +166,32 @@ function Input() {
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     placeholder="Type your message here..."
-                    className="message-input"
+                    className={isLoading ? "message-input loading-input" : "message-input"}
+                    disabled={isLoading}
+                    required
                 />
 
                 <input type="file" id="file-input" multiple onChange={handleFileInput} />
                 <label htmlFor="file-input" className="input-buttons upload-button">
                     <Upload size={20} />
+                    <span className="tooltiptext">Only (.pdf, .docx, .csv, .txt) are supported</span>
                 </label>
 
-                <button type="submit" disabled={session_id !== currentSessionId.sessionId} className="input-buttons send-button">
+                <button type="submit"  disabled={session_id !== currentSessionId.sessionId} className="input-buttons send-button">
                     <Send size={20} />
                 </button>
 
                 {isListening ?
                     <div className='input-buttons microphone-button'>
                         <input id="audio-input" onClick={stopListening} disabled={!isListening} />
-                        <label htmlFor="audio-input" style={{ color: "red" }} >
+                        <label htmlFor="audio-input" style={{ color: "red",cursor:'pointer' }} >
                             <Disc size={20} />
                         </label>
                     </div>
                     :
                     <div className='input-buttons microphone-button'>
                         <input id="audio-input" onClick={startListening} disabled={isListening} />
-                        <label htmlFor="audio-input">
+                        <label htmlFor="audio-input" style={{ cursor:'pointer' }}>
                             <Mic size={20} />
                         </label>
                     </div>

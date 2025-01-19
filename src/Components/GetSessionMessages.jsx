@@ -113,7 +113,7 @@ function GetSessionMessages() {
                             <div key={index} >
                                 <div className="message-wrapper user-message">
                                     <div className="message">
-                                        {message.files.length > 0 && <div>document present </div>}
+                                        {message.files.length > 0 && <div className='document-present'>.{message.files[0].split('.')[1]} document present </div>}
                                         {message.message}
 
                                     </div>
