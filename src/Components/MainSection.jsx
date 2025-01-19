@@ -21,7 +21,7 @@ function MainSection() {
                     <Menu size={25} />
                 </button>
 
-                <h3>SummarEase</h3>
+                <h3>SummarEase Ai</h3>
             </header>
 
             {/* <FlashCard /> */}

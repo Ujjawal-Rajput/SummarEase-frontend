@@ -57,17 +57,17 @@ const SidebarSessions = () => {
     },[]);
 
     return (
-        <div style={{borderLeft:'3px solid rgb(38, 50, 75)'}}>
+        <div>
             <ul>
                 {chapters && chapters.length > 0 ? (
                     chapters
                         .slice() // Create a copy of the array to avoid mutating the original
                         .reverse().map((session) => (
-                            <li key={session.sessionId}>
+                            <li key={session.sessionId} >
                                 {/* <a href={activeSessionId === session.sessionId.toString() ? '#' : `/c/${session.sessionId}`}
                                     
                                 > */}
-                                    <button className="chapter-button" onClick={()=>navigate(`/c/${session.sessionId}`)}>
+                                    <button className={session.sessionId === activeSessionId ? 'chapter-button active-chapter' : 'chapter-button'} onClick={()=>navigate(`/c/${session.sessionId}`)}>
                                         <MessageSquare size={16} />
                                         <span>{session.title}</span>
                                     </button>

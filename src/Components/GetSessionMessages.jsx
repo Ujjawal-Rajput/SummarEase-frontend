@@ -48,6 +48,7 @@ function GetSessionMessages() {
                         sessionId: data.sessionId,
                         title: data.title
                     })
+                    setError(null);
                 } else {
                     const errorData = await response.json();
                     console.error('Error fetching messages:', errorData.error);
