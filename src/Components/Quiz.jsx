@@ -60,9 +60,9 @@ function Quiz({ response, topic }) {
         <div className="container">
           <div className="quiz-container">
 
-            {quizData.map((question) => (
+            {quizData.map((question,index) => (
               <div key={question.id} className="question-card">
-                <h2 className="question">{question.question}</h2>
+                <h2 className="question">{index + 1}. {question.question}</h2>
                 <div className="options-grid">
                   {question.options.map((option) => (
                     <button
