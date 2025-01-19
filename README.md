@@ -55,9 +55,11 @@ The project allows users to:
 Here are some important visuals for understanding and presenting SummarEase:
 
 1. [Demo Video of SummarEase](https://youtu.be/oywoxh5d8EY?si=DIfEJxVWIRtoMa6c)
+
+2. [Live link of SummarEase](https://summareaseai.netlify.app/)
   
-2. ![SummarEase Interface - Screenshot 1](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/003/216/339/datas/original.png)
+3. ![SummarEase Interface - Screenshot 1](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/003/216/339/datas/original.png)
  
-3. ![SummarEase Interface - Screenshot 3](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/003/216/350/datas/original.png)
+4. ![SummarEase Interface - Screenshot 3](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/003/216/350/datas/original.png)
  
-4. ![SummarEase Interface - Screenshot 2](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/003/216/340/datas/original.png)
+5. ![SummarEase Interface - Screenshot 2](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/003/216/340/datas/original.png)
