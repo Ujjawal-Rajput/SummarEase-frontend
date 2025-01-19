@@ -1,4 +1,4 @@
-export default function ExtractJsonFromResponse(text) {
+export default function ExtractJsonFromResponse(text,topic) {
     // Clean up the input text
     const cleanText = text
       // Ensure proper separation between JSON objects
@@ -27,7 +27,9 @@ export default function ExtractJsonFromResponse(text) {
         .map((match) => {
           try {
             const jsonObject = JSON.parse(match.trim());
-            return validateJsonObject(jsonObject) ? jsonObject : null;
+            if (topic === 'Quiz') return validateJsonObjectForQuiz(jsonObject) ? jsonObject : null;
+            else if (topic === 'Flashcard') return validateJsonObjectForFlashcard(jsonObject) ? jsonObject : null;
+            else return null;
           } catch (error) {
             console.error('Failed to parse JSON object:', match);
             return null;
@@ -36,9 +38,9 @@ export default function ExtractJsonFromResponse(text) {
         .filter(Boolean); // Filter out invalid or null results
     }
   }
+
   
-  // Validation function to check for required keys and exactly 4 options
-  function validateJsonObject(obj) {
+  function validateJsonObjectForQuiz(obj) {
     // Define required keys (customize this based on your JSON structure)
     const requiredKeys = ['id', 'question', 'options'];
   
@@ -55,6 +57,25 @@ export default function ExtractJsonFromResponse(text) {
           'id' in option &&
           'text' in option &&
           'isCorrect' in option
+      ) // Validate each option
+    );
+  }
+
+
+  function validateJsonObjectForFlashcard(obj) {
+    // Define required keys (customize this based on your JSON structure)
+    const requiredKeys = ['id', 'heading', 'description'];
+  
+    return (
+      typeof obj === 'object' &&
+      obj !== null &&
+      requiredKeys.every((key) => key in obj) &&
+      Array.isArray(obj.description) &&
+      obj.description.every(
+        (option) =>
+          typeof option === 'object' &&
+          'id' in option &&
+          'text' in option
       ) // Validate each option
     );
   }

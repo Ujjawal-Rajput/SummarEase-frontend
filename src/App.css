@@ -168,6 +168,12 @@ ul li{
   border-radius: 0.5rem;
 } 
 
+@media only screen and (max-width: 600px) {
+  .message {
+    max-width: 100vw;
+  } 
+}
+
 .user-message .message {
   background-color: rgb(59, 130, 246);
   color: white;
@@ -302,75 +308,32 @@ ul li{
 
 
 /* ------------------flashcard */
-
-.flashcard {
-  width: 350px;
-  max-height: 250px; /* Show only half the height initially */
-  border-radius: 15px;
-  color: white;
+.flashcard-outerdiv{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
   padding: 20px;
-  /* display: flex;
-  flex-direction: column; */
-  /* align-items: center;
-  justify-content: center; */
-  text-align: center;
-  transition: height 0.5s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  overflow: hidden;
-  position: relative; /* To position the download icon */
-  /* box-sizing: border-box; Ensure padding doesn't affect size calculation */
-}
-
-.flashcard.expanded {
-  max-height: none; /* Allow full expansion to show content */
-  transition: all 0.5s ease;
-}
-
-.flashcard:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-.flashcard-heading {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
-
-.flashcard-content {
-  font-size: 16px;
-  line-height: 1.5;
-  /* margin-bottom: 20px; */
-}
-
-.flashcard-image {
   max-width: 100%;
-  max-height: 150px;
-  margin-top: 10px;
+  overflow: hidden;
 }
 
-.arrow {
-  font-size: 30px;
-  margin-top: 10px;
-  transition: transform 0.3s ease;
-}
-
-.arrow.rotate {
-  transform: rotate(180deg); /* Rotate the arrow when expanded */
-}
-
-.download-icon {
-  background-color: #fff;
-  border: 1px solid black;
-  border-radius: 30%;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
-  width: 30px;
+.flashcard-innerdiv{
+  border-radius: 10px;
+  padding: 20px;
+  color: #fff;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+}
+
+.flashcard-download-button{
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #fff;
+  color: black;
+  border: none;
+  border-radius:5px;
+  cursor: pointer;
 }
 
 .sessionError{
@@ -410,7 +373,7 @@ a{
 .radioLabel {
   display: flex;
   align-items: center;
-  padding: 0.2rem 0.7rem;
+  padding: 0.1rem 0.2rem;
   border-radius: 9999px;
   cursor: pointer;
   border: 1.5px solid #e5e7eb;

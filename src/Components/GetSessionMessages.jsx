@@ -119,8 +119,8 @@ function GetSessionMessages() {
                                 </div>
                                 <div className="message-wrapper assistant-message">
                                     <div className="message">
-                                        {message.topic === 'Quiz' && <Quiz response={message.response} /> }
-                                        {message.topic === 'Flashcard' && <FlashCard response={message.response} /> }
+                                        {message.topic === 'Quiz' && <Quiz response={message.response} topic={message.topic} /> }
+                                        {message.topic === 'Flashcard' && <FlashCard response={message.response} topic={message.topic} /> }
                                         {(message.topic === 'Ask-ai' || message.topic === 'Summarize' ) && <AiResponse response={message.response} /> }
                                         
                                     </div>

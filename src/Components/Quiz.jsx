@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Check, X } from 'lucide-react';
 import ExtractJsonFromResponse from './ExtractJsonFromResponse';
 
-function Quiz({ response }) {
+function Quiz({ response, topic }) {
     const [quizData, setQuizData] = useState([]);
     const [selectedAnswers, setSelectedAnswers] = useState({});
 
@@ -10,7 +10,7 @@ function Quiz({ response }) {
     //it set the data into quizData variable
     useEffect(() => {
         // Call the function and store the result in state
-        const extractedJson = ExtractJsonFromResponse(response);
+        const extractedJson = ExtractJsonFromResponse(response, topic);
         console.log(extractedJson);
         setQuizData(extractedJson);
     }, [response]);
