@@ -91,7 +91,7 @@ function Input() {
             formData.append("file", file); // Append each file with a unique key
         });
 
-        console.log(JSON.stringify(formData));
+        // console.log(JSON.stringify(formData));
 
         // Save the new message and its response to the backend while fetching the same response 
         try {
@@ -112,7 +112,7 @@ function Input() {
 
 
             const resp = await response.json();
-            console.log(resp);
+            // console.log(resp);
             // update state in recoil
             setMessages((messages) => [...messages, resp]);
 

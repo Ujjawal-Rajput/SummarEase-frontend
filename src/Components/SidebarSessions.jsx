@@ -14,10 +14,10 @@ const SidebarSessions = () => {
     const navigate = useNavigate();
     const handleLogout = useLogout();
 
-    const handleNewChat = () => {
-        const sessionId = generateSessionId(); // Replace with your session ID logic
-        navigate(`/c/${sessionId}`);
-      };
+    // const handleNewChat = () => {
+    //     const sessionId = generateSessionId(); 
+    //     navigate(`/c/${sessionId}`);
+    //   };
 
     // Extract active session ID from the URL
     const activeSessionId = location.pathname.split('/').pop();
@@ -45,7 +45,7 @@ const SidebarSessions = () => {
                 const data = await response.json();
 
                 if (data.message == "Token has expired or invalid token") handleLogout();
-                console.log(data)
+                // console.log(data)
                 setChapters(data.sessions);
 
             } catch (error) {

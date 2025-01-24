@@ -16,7 +16,7 @@ const Signup = () => {
         setDetails({ ...details, [e.target.name]: e.target.value });
     };
 
-    console.log(auth)
+    // console.log(auth)
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);   // Start loading
@@ -30,8 +30,8 @@ const Signup = () => {
         const data = await response.json();
         if (!response.ok) setError(data.message);
         if (data.token) {
-            setAuth({ user: data.user, token: data.token });
-            console.log(data)
+            setAuth({ name: data.name, user: data.user, token: data.token });
+            // console.log(data)
             navigate('/');
         }
         setLoading(false);

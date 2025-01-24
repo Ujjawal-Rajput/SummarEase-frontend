@@ -31,7 +31,8 @@ export default function ExtractJsonFromResponse(text,topic) {
             else if (topic === 'Flashcard') return validateJsonObjectForFlashcard(jsonObject) ? jsonObject : null;
             else return null;
           } catch (error) {
-            console.error('Failed to parse JSON object:', match);
+            // console.error('Failed to parse JSON object:', match);
+            console.log("Invalid quiz questions are removed")
             return null;
           }
         })

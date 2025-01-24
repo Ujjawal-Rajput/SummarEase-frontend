@@ -11,7 +11,7 @@ function Quiz({ response, topic }) {
     useEffect(() => {
         // Call the function and store the result in state
         const extractedJson = ExtractJsonFromResponse(response, topic);
-        console.log(extractedJson);
+        // console.log(extractedJson);
         setQuizData(extractedJson);
     }, [response]);
 

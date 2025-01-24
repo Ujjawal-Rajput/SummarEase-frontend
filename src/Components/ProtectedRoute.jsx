@@ -5,7 +5,6 @@ import { authState } from '../Store/State';
 
 const ProtectedRoute = ({ children }) => {
   const auth = useRecoilValue(authState);
-  console.log(auth)
 
   return auth.user ? children : <Navigate to="/login" replace />;
 };

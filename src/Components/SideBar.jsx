@@ -1,6 +1,6 @@
 import { MessageSquare, Plus, Bot, Medal, Zap, LogOut, ArrowBigRightIcon } from 'lucide-react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { chaptersAtom, messageResponseAtom, sidebarAtom, currentSessionAtom, responseTopic } from '../Store/State';
+import { chaptersAtom, messageResponseAtom, sidebarAtom, currentSessionAtom, responseTopic, authState } from '../Store/State';
 import { useNavigate } from 'react-router-dom';
 import SidebarSessions from './SidebarSessions';
 import { useLogout } from './LogoutHandler';
@@ -8,7 +8,7 @@ import { useLogout } from './LogoutHandler';
 function SideBar() {
     const isSidebarOpen = useRecoilValue(sidebarAtom);
     // const chapters = useRecoilValue(chaptersAtom);
-    // const setAuth = useSetRecoilState(authState);
+    const authUser = useRecoilValue(authState);
     const setMessages = useSetRecoilState(messageResponseAtom);
     const setChapters = useSetRecoilState(chaptersAtom);
     const setCurrentSession = useSetRecoilState(currentSessionAtom);
@@ -46,7 +46,7 @@ function SideBar() {
         //make request to srever for new session and get all sessions also and set them into current session atom
 
         const token = JSON.parse(localStorage.getItem('auth')).token; //{user: {email: "a@a.a", name: "a"}, token: "jwt-token"}
-        console.log(token)
+        // console.log(token)
         if (!token) {
             throw new Error('Unauthorized');
         }
@@ -110,7 +110,7 @@ function SideBar() {
             <div className='new-chat-container'>
                 <button className="new-chat-button" onClick={handleLogout}>
                     <LogOut size={16} />
-                    <span>Logout</span>
+                    <span>Logout ({authUser.user.name})</span>
                 </button>
             </div>
         </div>

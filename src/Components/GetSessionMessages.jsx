@@ -43,7 +43,7 @@ function GetSessionMessages() {
                     // console.log(data)
 
                     setMessages(data.message || []); // Assuming messages are in the 'messages' field
-                    console.log(messages)
+                    // console.log(data.message)
                     setCurrentSessionId({
                         sessionId: data.sessionId,
                         title: data.title

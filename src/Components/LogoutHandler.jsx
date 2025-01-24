@@ -13,6 +13,7 @@ export const useLogout = () => {
 
   const handleLogout = () => {
     setAuth({
+      name: null,
       user: null,
       token: null,
     });

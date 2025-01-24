@@ -1,10 +1,10 @@
-import { Navigate } from "react-router-dom";
-import { atom, selector, useSetRecoilState } from "recoil";
+import { atom } from "recoil";
 
 // Get initial state from localStorage if it exists
 const getInitialAuthState = () => {
     const savedAuth = localStorage.getItem('auth');
     return savedAuth ? JSON.parse(savedAuth) : {
+        name: null,
         user: null,
         token: null
     };

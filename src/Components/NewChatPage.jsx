@@ -19,7 +19,7 @@ const NewChatPage = () => {
             apiCalled.current = true;
             setMessages([]); // Clear the previous messages
             const token = JSON.parse(localStorage.getItem('auth'))?.token;
-            console.log(token);
+            // console.log(token);
 
             if (!token) {
                 throw new Error('Unauthorized');
@@ -32,7 +32,7 @@ const NewChatPage = () => {
                         'Authorization': token,
                     },
                 });
-                console.log("printing...")
+                // console.log("printing...")
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch sessions');

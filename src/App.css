@@ -170,7 +170,7 @@ ul li{
 
 @media only screen and (max-width: 600px) {
   .message {
-    max-width: 100vw;
+    max-width: 85vw;
   } 
 }
 

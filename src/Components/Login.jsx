@@ -11,7 +11,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    console.log(auth)
+    // console.log(auth)
     const [credentials, setCredentials] = useState({ email: '', password: '' });
     const handleChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -29,8 +29,8 @@ const Login = () => {
         const data = await response.json();
         if (!response.ok) setError(data.message);
         if (data.token) {
-            setAuth({ user: data.user, token: data.token });
-            console.log(data)
+            setAuth({ name: data.name, user: data.user, token: data.token });
+            // console.log(data)
             navigate('/');
         }
         setLoading(false);
