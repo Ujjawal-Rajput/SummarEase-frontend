@@ -7,6 +7,7 @@ import Quiz from './Quiz';
 import FlashCard from './FlashCard';
 import { useLogout } from '../Utils/LogoutHandler';
 import SessionNotFoundError from './SessionNotFoundError';
+import { User, Bot } from 'lucide-react';
 
 
 function GetSessionMessages() {
@@ -111,6 +112,9 @@ function GetSessionMessages() {
                         {messages.map((message, index) => (
                             <div key={index} >
                                 <div className="message-wrapper user-message">
+                                    <div className='user-message-icon'>
+                                        <User/>
+                                    </div>
                                     <div className="message">
                                         {message.files.length > 0 && <div className='document-present'>.{message.files[0].split('.')[1]} document present </div>}
                                         {message.message}
@@ -118,6 +122,9 @@ function GetSessionMessages() {
                                     </div>
                                 </div>
                                 <div className="message-wrapper assistant-message">
+                                    <div className='assistant-message-icon'>
+                                        <Bot/>
+                                    </div>
                                     <div className="message">
                                         {message.topic === 'Quiz' && <Quiz response={message.response} topic={message.topic} /> }
                                         {message.topic === 'Flashcard' && <FlashCard response={message.response} topic={message.topic} /> }
