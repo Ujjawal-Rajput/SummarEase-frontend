@@ -3,7 +3,7 @@ import { Send, Upload, Check } from 'lucide-react';
 import '../App.css';
 import { currentSessionAtom, messageResponseAtom, responseTopic } from '../Store/State';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import useSpeechToText from './useSpeechToText';
+import useSpeechToText from '../Utils/useSpeechToText';
 import { Mic, Disc } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 
@@ -18,13 +18,15 @@ function Input() {
     const [isLoading, setIsLoading] = useState(false);
     // const [isListening, setIsListening] = useState(false);
 
+    const [rows, setRows] = useState(1);
+    const maxLines = 8;
 
     const options = [
         { id: 'Ask-ai', label: 'Ask ai' },
         { id: 'Summarize', label: 'Summarize' },
         { id: 'Flashcard', label: 'Flashcard' },
         { id: 'Quiz', label: 'Quiz' },
-      ];
+    ];
 
     // useEffect(()=>{
     //     setSelectedOption('1');
@@ -32,7 +34,7 @@ function Input() {
 
     useEffect(() => {
         if (transcript) {
-            setInputValue(transcript); // Update input field when speech is transcribed
+            setInputValue((previousInput) => previousInput + ' ' + transcript); // Update input field when speech is transcribed
         }
     }, [transcript]);
 
@@ -60,7 +62,7 @@ function Input() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         // -------------------------------------------------------------
         //this code it optional because already disabled submit button
         if (session_id != currentSessionId.sessionId) {
@@ -95,7 +97,6 @@ function Input() {
 
         // Save the new message and its response to the backend while fetching the same response 
         try {
-
             const token = JSON.parse(localStorage.getItem('auth')).token; //{user: {email: "a@a.a", name: "a"}, token: "jwt-token"}
 
             if (!token) {
@@ -110,9 +111,9 @@ function Input() {
                 body: formData,
             });
 
-
             const resp = await response.json();
             // console.log(resp);
+
             // update state in recoil
             setMessages((messages) => [...messages, resp]);
 
@@ -126,6 +127,23 @@ function Input() {
             setIsLoading(false);
         }
     }
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault(); // Prevent adding a new line
+            handleSubmit(event); // Call the submit handler
+        }
+    };
+
+    const handleInputChange = (e) => {
+        const lineBreaks = e.target.value.split('\n').length; // Count the number of lines
+        if (lineBreaks <= maxLines) {
+            setInputValue(e.target.value);
+            setRows(Math.min(lineBreaks, maxLines)); // Adjust rows up to maxLines
+        } else {
+            setInputValue(e.target.value); 
+        }
+    };
 
     return (
         <div className="input-area">
@@ -145,7 +163,7 @@ function Input() {
                                 checked={selectedOption === option.id}
                                 onChange={(e) => setSelectedOption(e.target.value)}
                                 className='radioInput'
-                                />
+                            />
                             <label htmlFor={option.id} className="radioLabel">
                                 <div className="checkCircle">
                                     {selectedOption === option.id && (
@@ -160,11 +178,13 @@ function Input() {
                 {/* -------------- */}
 
 
-                <input
+                <textarea
                     type="text"
                     name="message"
                     value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    rows={rows}
+                    onChange={handleInputChange}
                     placeholder="Type your message here..."
                     className={isLoading ? "message-input loading-input" : "message-input"}
                     disabled={isLoading}
@@ -177,21 +197,21 @@ function Input() {
                     <span className="tooltiptext">Only (.pdf, .docx, .csv, .txt) are supported</span>
                 </label>
 
-                <button type="submit"  disabled={session_id !== currentSessionId.sessionId} className="input-buttons send-button">
+                <button type="submit" disabled={session_id !== currentSessionId.sessionId} className="input-buttons send-button">
                     <Send size={20} />
                 </button>
 
                 {isListening ?
                     <div className='input-buttons microphone-button'>
                         <input id="audio-input" onClick={stopListening} disabled={!isListening} />
-                        <label htmlFor="audio-input" style={{ color: "red",cursor:'pointer' }} >
+                        <label htmlFor="audio-input" style={{ color: "red", cursor: 'pointer' }} >
                             <Disc size={20} />
                         </label>
                     </div>
                     :
                     <div className='input-buttons microphone-button'>
                         <input id="audio-input" onClick={startListening} disabled={isListening} />
-                        <label htmlFor="audio-input" style={{ cursor:'pointer' }}>
+                        <label htmlFor="audio-input" style={{ cursor: 'pointer' }}>
                             <Mic size={20} />
                         </label>
                     </div>

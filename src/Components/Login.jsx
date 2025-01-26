@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { authState } from '../Store/State';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,10 @@ const Login = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        if (auth.user) navigate('/');
+    },[])
 
     // console.log(auth)
     const [credentials, setCredentials] = useState({ email: '', password: '' });

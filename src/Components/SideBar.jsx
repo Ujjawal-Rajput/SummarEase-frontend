@@ -3,7 +3,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { chaptersAtom, messageResponseAtom, sidebarAtom, currentSessionAtom, responseTopic, authState } from '../Store/State';
 import { useNavigate } from 'react-router-dom';
 import SidebarSessions from './SidebarSessions';
-import { useLogout } from './LogoutHandler';
+import { useLogout } from '../Utils/LogoutHandler';
 
 function SideBar() {
     const isSidebarOpen = useRecoilValue(sidebarAtom);

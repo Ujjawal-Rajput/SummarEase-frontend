@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
+import React, { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import { authState } from '../Store/State';
 import { useNavigate } from 'react-router-dom';
 import "../Auth.css"
 
 const Signup = () => {
-    const setAuth = useSetRecoilState(authState);
+    const [auth, setAuth] = useRecoilState(authState);
     const [details, setDetails] = useState({ name: '', email: '', password: '' });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const auth = useRecoilValue(authState);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (auth.user) navigate('/');
+    }, [])
 
     const handleChange = (e) => {
         setDetails({ ...details, [e.target.name]: e.target.value });
@@ -55,7 +58,7 @@ const Signup = () => {
 
             </form>
             <p>
-                Already have an account? <a onClick={()=>navigate('/login')}>Login</a>
+                Already have an account? <a onClick={() => navigate('/login')}>Login</a>
             </p>
         </div>
     );

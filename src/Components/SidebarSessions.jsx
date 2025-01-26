@@ -4,7 +4,7 @@ import {  useSetRecoilState, useRecoilState } from 'recoil';
 import { chaptersAtom } from '../Store/State';
 import { MessageSquare } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useLogout } from './LogoutHandler';
+import { useLogout } from '../Utils/LogoutHandler';
 
 
 const SidebarSessions = () => {

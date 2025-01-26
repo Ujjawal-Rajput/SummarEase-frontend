@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { chaptersAtom, messageResponseAtom, currentSessionAtom, responseTopic } from '../Store/State';
-import { useLogout } from './LogoutHandler';
+import { useLogout } from '../Utils/LogoutHandler';
 
 const NewChatPage = () => {
     const navigate = useNavigate();

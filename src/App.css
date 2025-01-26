@@ -78,9 +78,9 @@ ul li{
   transition: background-color 0.2s;
 }
 
-.chapter-button a{
+/* .chapter-button a{
   text-decoration: none;
-}
+} */
 
 .chapter-button:hover, .active-chapter {
   background-color: rgb(55, 65, 81);
@@ -166,13 +166,15 @@ ul li{
   max-width: 70vw;
   padding: 1rem;
   border-radius: 0.5rem;
+  overflow-wrap: break-word; /* Breaks long words */
+  overflow: hidden; /* Prevents content overflow */
 } 
 
-@media only screen and (max-width: 600px) {
+/* @media only screen and (max-width: 600px) {
   .message {
-    max-width: 85vw;
+    max-width: 90vw;
   } 
-}
+} */
 
 .user-message .message {
   background-color: rgb(59, 130, 246);
@@ -206,6 +208,7 @@ ul li{
   border: 2px solid rgb(58, 59, 60);
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #fff;
 }
 
 .message-input:focus {
@@ -354,9 +357,9 @@ ul li{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
-  padding: 20px;
-  max-width: 100%;
-  overflow: hidden;
+  padding-top: 5px;
+  /* max-width: 100%; */
+  overflow: auto;
 }
 
 .flashcard-innerdiv{
@@ -364,8 +367,11 @@ ul li{
   padding: 20px;
   color: #fff;
   cursor: pointer;
+  background-color: rgb(24, 31, 46);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s;
+  overflow-wrap: break-word; 
+  overflow: hidden;
 }
 
 .flashcard-download-button{
@@ -388,7 +394,7 @@ ul li{
 
 
 a{
-  color: rgb(17, 24, 39);
+  color: rgb(62, 98, 174);
   cursor: pointer;
 }
 
@@ -408,7 +414,7 @@ a{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.25rem;
   padding-bottom: 10px;
 }
 
@@ -440,7 +446,7 @@ a{
   height: 1rem;
   border-radius: 50%;
   border: 2px solid #d1d5db;
-  margin-right: 0.5rem;
+  margin-right: 0.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -497,8 +503,9 @@ a{
 
 .options-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr); /* By default, 2 options per row */
   gap: 0.75rem;
+  /* background-color: #00c0ff; */
 }
 
 .option {
@@ -513,7 +520,17 @@ a{
   transition: all 0.3s ease;
   color: white;
   font-size: 0.875rem;
+  word-wrap: break-word; /* Break long words if necessary */
+  white-space: normal; /* Allow text wrapping */
 }
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+  .options-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr)); /* Adjusts columns dynamically */
+  }
+}
+
 
 .option:hover:not(:disabled) {
   background-color: rgba(255, 255, 255, 0.15);

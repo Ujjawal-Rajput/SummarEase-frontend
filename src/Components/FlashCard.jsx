@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import html2canvas from 'html2canvas';
-import ExtractJsonFromResponse from './ExtractJsonFromResponse';
+import ExtractJsonFromResponse from '../Utils/ExtractJsonFromResponse';
 
 const FlashCard = ({ response, topic }) => {
   const [cardData, setCardData] = useState([]);
@@ -53,11 +53,11 @@ const FlashCard = ({ response, topic }) => {
           <div
             className='flashcard-innerdiv'
             key={index}
-            style={{
-              backgroundColor: 'rgb(24, 31, 46)',
-              // backgroundColor: generateRandomColor(),
-              // transform: expanded ? 'scale(1.05)' : 'scale(1)',
-            }}
+            // style={{
+            //  // backgroundColor: 'rgb(24, 31, 46)',
+            //   // backgroundColor: generateRandomColor(),
+            //   // transform: expanded ? 'scale(1.05)' : 'scale(1)',
+            // }}
           >
             <h3>{index + 1}. {card.heading}</h3><br />
             <ul>

@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { currentSessionAtom, messageResponseAtom, responseTopic } from '../Store/State';
 import AiResponse from './AiResponse';
 import Quiz from './Quiz';
 import FlashCard from './FlashCard';
+import { useLogout } from '../Utils/LogoutHandler';
+import SessionNotFoundError from './SessionNotFoundError';
 
 
 function GetSessionMessages() {
@@ -15,6 +17,8 @@ function GetSessionMessages() {
     const [error, setError] = useState(null);
     const setCurrentSessionId = useSetRecoilState(currentSessionAtom);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const handleLogout = useLogout();
     // const responseTopicValue = useRecoilValue(responseTopic);
 
     const scrollToBottom = () => {
@@ -41,7 +45,8 @@ function GetSessionMessages() {
                 if (response.ok) {
                     const data = await response.json();
                     // console.log(data)
-
+                    if (data.error === "Session has expired") handleLogout();
+                    
                     setMessages(data.message || []); // Assuming messages are in the 'messages' field
                     // console.log(data.message)
                     setCurrentSessionId({
@@ -51,6 +56,7 @@ function GetSessionMessages() {
                     setError(null);
                 } else {
                     const errorData = await response.json();
+                    // if (errorData.error === 'Session has expired') handleLogout();
                     console.error('Error fetching messages:', errorData.error);
                     setError(errorData.error);  // Set the error message
                     setCurrentSessionId({
@@ -79,21 +85,14 @@ function GetSessionMessages() {
     if (loading) {
         return (
             <div className="loading-state">
-                <h2>Loading conversations...</h2>
+                <h3>Loading conversations...</h3>
             </div>
         );
     }
 
 
     if (error) {
-        return (
-            <div className="empty-state">
-                <div className="empty-state-content">
-                    <h1 style={{ color: 'black' }}>{error}</h1>
-                    <p>The session with the provided ID could not be found. Please check the session ID or try again later.</p>
-                </div>
-            </div>
-        )  // Render the error page
+        return <SessionNotFoundError message={error}/>  // Render the error page
     }
 
     else {
@@ -132,9 +131,7 @@ function GetSessionMessages() {
                 )
                 }
 
-
                 <div ref={messagesEndRef} />
-
 
             </>
         )

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Check, X } from 'lucide-react';
-import ExtractJsonFromResponse from './ExtractJsonFromResponse';
+import ExtractJsonFromResponse from '../Utils/ExtractJsonFromResponse';
 
 function Quiz({ response, topic }) {
     const [quizData, setQuizData] = useState([]);
