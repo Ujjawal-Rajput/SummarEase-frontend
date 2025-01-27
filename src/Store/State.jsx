@@ -53,6 +53,23 @@ export const currentSessionAtom = atom({
     }
 });
 
+//different chat context
+export const chaptersAtom = atom({
+    key: "chaptersAtom",
+    default: []
+})
+
+// {
+//     id: "232434",
+//     title: "this is a heading 1"
+// }, {
+//     id: "744884",
+//     title: "this is a heading 2"
+// }, {
+//     id: "937739",
+//     title: "this is a heading 3"
+// }
+
 export const messageResponseAtom = atom({
     key: "messageResponseAtom",
     default: []
@@ -79,23 +96,6 @@ export const messageResponseAtom = atom({
 //   });
 
 
-
-//different chat context
-export const chaptersAtom = atom({
-    key: "chaptersAtom",
-    default: []
-})
-
-// {
-//     id: "232434",
-//     title: "this is a heading 1"
-// }, {
-//     id: "744884",
-//     title: "this is a heading 2"
-// }, {
-//     id: "937739",
-//     title: "this is a heading 3"
-// }
 
 
 // const handleLogout = () => {

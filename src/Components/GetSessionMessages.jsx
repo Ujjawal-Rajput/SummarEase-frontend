@@ -128,7 +128,7 @@ function GetSessionMessages() {
                                     <div className="message">
                                         {message.topic === 'Quiz' && <Quiz response={message.response} topic={message.topic} /> }
                                         {message.topic === 'Flashcard' && <FlashCard response={message.response} topic={message.topic} /> }
-                                        {(message.topic === 'Ask-ai' || message.topic === 'Summarize' ) && <AiResponse response={message.response} /> }
+                                        {(message.topic === 'Ask-ai' || message.topic === 'Summarize' || message.topic === 'Code') && <AiResponse response={message.response} /> }
                                         
                                     </div>
                                 </div>

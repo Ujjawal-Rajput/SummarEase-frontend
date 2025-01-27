@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Send, Upload, Check } from 'lucide-react';
 import '../App.css';
-import { currentSessionAtom, messageResponseAtom, responseTopic } from '../Store/State';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { chaptersAtom, currentSessionAtom, messageResponseAtom, responseTopic } from '../Store/State';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import useSpeechToText from '../Utils/useSpeechToText';
 import { Mic, Disc } from 'lucide-react';
 import { useParams } from 'react-router-dom';
@@ -13,9 +13,10 @@ function Input() {
     const [messages, setMessages] = useRecoilState(messageResponseAtom);
     const [selectedOption, setSelectedOption] = useRecoilState(responseTopic);
     const { transcript, isListening, startListening, stopListening } = useSpeechToText();
-    const currentSessionId = useRecoilValue(currentSessionAtom);
+    const [currentSessionId, setCurrentSessionId] = useRecoilState(currentSessionAtom);
     const { session_id } = useParams();
     const [isLoading, setIsLoading] = useState(false);
+    const setChapters = useSetRecoilState(chaptersAtom);
     // const [isListening, setIsListening] = useState(false);
 
     const [rows, setRows] = useState(1);
@@ -23,10 +24,26 @@ function Input() {
 
     const options = [
         { id: 'Ask-ai', label: 'Ask ai' },
+        { id: 'Code', label: 'Code' },
         { id: 'Summarize', label: 'Summarize' },
         { id: 'Flashcard', label: 'Flashcard' },
         { id: 'Quiz', label: 'Quiz' },
     ];
+
+    const updateTitleBySessionId = (sessionIdToUpdate, newTitle) => {
+        setChapters((prevChapters) =>
+            prevChapters.map((chapter) =>
+                chapter.sessionId === sessionIdToUpdate
+                    ? { ...chapter, title: newTitle }
+                    : chapter // Keep other chapters unchanged
+            )
+        );
+
+        setCurrentSessionId((prevSession) => ({
+            ...prevSession, // Preserve other fields (like sessionId)
+            title: newTitle,
+        }));
+    };
 
     // useEffect(()=>{
     //     setSelectedOption('1');
@@ -114,6 +131,8 @@ function Input() {
             const resp = await response.json();
             // console.log(resp);
 
+            if (messages.length == 0) updateTitleBySessionId(session_id, resp.sessionTitle);
+
             // update state in recoil
             setMessages((messages) => [...messages, resp]);
 
@@ -141,7 +160,7 @@ function Input() {
             setInputValue(e.target.value);
             setRows(Math.min(lineBreaks, maxLines)); // Adjust rows up to maxLines
         } else {
-            setInputValue(e.target.value); 
+            setInputValue(e.target.value);
         }
     };
 

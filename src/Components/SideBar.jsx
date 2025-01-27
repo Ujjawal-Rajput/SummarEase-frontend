@@ -1,4 +1,4 @@
-import { MessageSquare, Plus, Bot, Medal, Zap, LogOut, ArrowBigRightIcon } from 'lucide-react';
+import { MessageSquare, Plus, Bot, Medal, Zap, LogOut, ArrowBigRightIcon, Code } from 'lucide-react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { chaptersAtom, messageResponseAtom, sidebarAtom, currentSessionAtom, responseTopic, authState } from '../Store/State';
 import { useNavigate } from 'react-router-dom';
@@ -18,9 +18,10 @@ function SideBar() {
 
     const features = [
         { id: 'Ask-ai', label: 'Ask AI',icon:<Bot size={16} /> },
-        { id: 'Summarize', label: 'Chapter summarizer', icon:<Medal size={16} /> },
-        { id: 'Flashcard', label: 'Generate flashcards', icon:<Zap size={16} />},
-        { id: 'Quiz', label: 'Quiz generator', icon:<ArrowBigRightIcon size={16} /> },
+        { id: 'Code', label: 'Ask to code',icon:<Code size={16} /> },
+        { id: 'Summarize', label: 'Summarizer', icon:<Medal size={16} /> },
+        { id: 'Flashcard', label: 'Flashcard', icon:<Zap size={16} />},
+        { id: 'Quiz', label: 'Quiz', icon:<ArrowBigRightIcon size={16} /> },
     ];
 
 

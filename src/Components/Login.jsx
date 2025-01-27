@@ -35,7 +35,7 @@ const Login = () => {
         if (data.token) {
             setAuth({ name: data.name, user: data.user, token: data.token });
             // console.log(data)
-            navigate('/');
+            navigate(`/c/${data.LastSessionId}`);
         }
         setLoading(false);
     };
@@ -60,6 +60,12 @@ const Login = () => {
             <p>
                 Don't have an account? <a onClick={()=>navigate('/signup')}>Sign up</a>
             </p>
+
+            {/* <div className='test-credentials'>
+                <p>Want to Use test credentials ?</p>
+                <strong>Email : </strong> <span>test@test.com</span><br/>
+                <strong>Password : </strong> <span>1234</span>
+            </div> */}
         </div>
     );
 };

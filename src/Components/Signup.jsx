@@ -45,12 +45,14 @@ const Signup = () => {
             <h2>Sign Up</h2><br />
             {error && <p className="error">{error}</p>}
             <form onSubmit={handleSubmit}>
+                <p style={{fontSize:'12px'}}>→ No email verification is required</p>
                 <div><input name="name" type="name" placeholder="Name" onChange={handleChange} required /></div>
                 <div>
                     <input name="email" type="email" placeholder="Email" onChange={handleChange} required />
 
                 </div>
                 <input name="password" type="password" placeholder="Password" onChange={handleChange} required />
+
 
                 <button type="submit" disabled={loading}>
                     {loading ? 'Loading...' : 'Sign up'}
