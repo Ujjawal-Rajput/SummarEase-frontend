@@ -11,7 +11,7 @@ import {useLogout} from '../Utils/LogoutHandler';
 
 function MainSection() {
     const setIsSidebarOpen = useSetRecoilState(sidebarAtom);
-    const { handleLogout } = useLogout();
+    const handleLogout = useLogout();
 
     return (
         <div className="main-content">
