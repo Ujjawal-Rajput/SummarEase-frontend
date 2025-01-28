@@ -1,5 +1,5 @@
 import { Plus, Bot, Medal, Zap, LogOut, ArrowBigRightIcon, Code } from 'lucide-react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { sidebarAtom,  authState, responseTopic } from '../Store/State';
 import SidebarSessions from './SidebarSessions';
 import { useLogout } from '../Utils/LogoutHandler';
@@ -8,7 +8,7 @@ import useNewChat from '../Utils/useNewChat';
 function SideBar() {
   const isSidebarOpen = useRecoilValue(sidebarAtom);
   const authUser = useRecoilValue(authState);
-  const responseTopicValue = useRecoilValue(responseTopic);
+  const [responseTopicValue, setResponseTopicValue] = useRecoilState(responseTopic);
   const handleLogout = useLogout();
   const { handleNewChat } = useNewChat();
 
