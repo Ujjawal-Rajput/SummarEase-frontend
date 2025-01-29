@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Send, Upload, Check } from 'lucide-react';
 import '../App.css';
-import { chaptersAtom, currentSessionAtom, messageResponseAtom, responseTopic } from '../Store/State';
+import { chaptersAtom, currentSessionAtom, messageResponseAtom, messagesHistoryAtom, responseTopic } from '../Store/State';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import useSpeechToText from '../Utils/useSpeechToText';
 import { Mic, Disc } from 'lucide-react';
 import { useParams } from 'react-router-dom';
+import { useLogout } from '../Utils/LogoutHandler';
 
 function Input() {
     const [inputValue, setInputValue] = useState('');
@@ -17,6 +18,8 @@ function Input() {
     const { session_id } = useParams();
     const [isLoading, setIsLoading] = useState(false);
     const setChapters = useSetRecoilState(chaptersAtom);
+    const [messagesHistory, setMessagesHistory] = useRecoilState(messagesHistoryAtom);
+    const handleLogout = useLogout();
     // const [isListening, setIsListening] = useState(false);
 
     const [rows, setRows] = useState(1);
@@ -106,6 +109,8 @@ function Input() {
         formData.append('message', inputValue);
         formData.append('session_id', session_id);
         formData.append('topic', selectedOption);
+        formData.append('messages_history', JSON.stringify(messagesHistory.length > 0 ? messagesHistory : []));
+
         selectedFiles.forEach((file) => {
             formData.append("file", file); // Append each file with a unique key
         });
@@ -129,12 +134,22 @@ function Input() {
             });
 
             const resp = await response.json();
-            // console.log(resp);
+
+            // Handle (401) Response
+            if (response.status === 401) {
+                console.log(resp);
+                handleLogout(); // Logout the user
+                return;
+            }
 
             if (messages.length == 0) updateTitleBySessionId(session_id, resp.sessionTitle);
 
-            // update state in recoil
+            // update message state
             setMessages((messages) => [...messages, resp]);
+
+            //update messages history state
+            const new_message = [{"role": "user", "parts": resp.message}, {"role": "model", "parts": resp.response}];
+            setMessagesHistory((messages)=>[...messages, ...new_message]);
 
             // reset the useStates
             setInputValue('');

@@ -1,6 +1,6 @@
 import { useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
-import { authState, messageResponseAtom, chaptersAtom, currentSessionAtom, responseTopic } from '../Store/State';
+import { authState, messageResponseAtom, chaptersAtom, currentSessionAtom, responseTopic, messagesHistoryAtom } from '../Store/State';
 
 export const useLogout = () => {
   const setAuth = useSetRecoilState(authState);
@@ -9,6 +9,8 @@ export const useLogout = () => {
   const setCurrentSession = useSetRecoilState(currentSessionAtom);
   const setSelectedOption = useSetRecoilState(responseTopic);
   const navigate = useNavigate();
+  const setMessagesHistory = useSetRecoilState(messagesHistoryAtom);
+
   
 
   const handleLogout = () => {
@@ -18,6 +20,7 @@ export const useLogout = () => {
       token: null,
     });
     setMessages([]);
+    setMessagesHistory([]);
     setChapters([]);
     setCurrentSession({
       sessionId: null,

@@ -11,7 +11,7 @@ const AiResponse = ({ response }) => {
 
 
     useEffect(() => {
-        if (currentIndex < response.length) {
+        if (response && currentIndex < response.length) {
             const timeout = setTimeout(() => {
                 setDisplayedText((prev) => prev + response.slice(currentIndex, currentIndex + charsPerTick));
                 setCurrentIndex((prev) => prev + charsPerTick);

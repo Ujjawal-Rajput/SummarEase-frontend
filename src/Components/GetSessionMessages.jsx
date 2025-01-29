@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { currentSessionAtom, messageResponseAtom, responseTopic } from '../Store/State';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { currentSessionAtom, messageResponseAtom, messagesHistoryAtom } from '../Store/State';
 import AiResponse from './AiResponse';
 import Quiz from './Quiz';
 import FlashCard from './FlashCard';
@@ -20,6 +20,8 @@ function GetSessionMessages() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const handleLogout = useLogout();
+    const [tempMessages, setTempMessages] = useState([]);
+    const setMessagesHistory = useSetRecoilState(messagesHistoryAtom);
     // const responseTopicValue = useRecoilValue(responseTopic);
 
     const scrollToBottom = () => {
@@ -29,6 +31,10 @@ function GetSessionMessages() {
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
+
+    useEffect(() => {
+        setMessagesHistory(tempMessages); // Update Recoil state outside rendering
+      }, [tempMessages, setMessagesHistory]); // Runs whenever `tempMessages` changes
 
     useEffect(() => {
         const fetchMessages = async () => {
@@ -48,7 +54,19 @@ function GetSessionMessages() {
                     // console.log(data)
                     if (data.error === "Session has expired") handleLogout();
                     
+                    //update messages
                     setMessages(data.message || []); // Assuming messages are in the 'messages' field
+                    
+                    //update messages history
+                    data.message.forEach((message) => {
+                        const newItem = [
+                          { 'role': "user", 'parts': message.message },
+                          { 'role': "model", 'parts': message.response },
+                        ];
+                        setTempMessages((prevArray) => [...prevArray, ...newItem]); // Update tempMessages
+                      });
+                    
+
                     // console.log(data.message)
                     setCurrentSessionId({
                         sessionId: data.sessionId,

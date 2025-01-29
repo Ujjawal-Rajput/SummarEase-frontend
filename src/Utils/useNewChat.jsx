@@ -1,5 +1,5 @@
 import { useSetRecoilState } from 'recoil';
-import { chaptersAtom, messageResponseAtom, currentSessionAtom, responseTopic } from '../Store/State';
+import { chaptersAtom, messageResponseAtom, currentSessionAtom, responseTopic, messagesHistoryAtom } from '../Store/State';
 import { useLogout } from '../Utils/LogoutHandler';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,9 +10,11 @@ const useNewChat = () => {
   const setResponseTopicValue = useSetRecoilState(responseTopic);
   const navigate = useNavigate();
   const handleLogout = useLogout();
+  const setMessagesHistory = useSetRecoilState(messagesHistoryAtom);
 
   const handleNewChat = async () => {
     setMessages([]);
+    setMessagesHistory([]);
     //make request to srever for new session and get all sessions also and set them into current session atom
 
     const token = JSON.parse(localStorage.getItem('auth'))?.token; //{user: {email: "a@a.a", name: "a"}, token: "jwt-token"}
@@ -28,15 +30,18 @@ const useNewChat = () => {
           'Authorization': token,
         },
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch sessions');
-      }
-
       const data = await response.json();
-      // console.log(data)
+
+      // Handle (401) Response
+      if (response.status === 401) {
+        console.log(data)
+        handleLogout(); // Logout the user
+        return;
+    }
+
       
-      if (data.message === "Token has expired or invalid token") handleLogout();
+      // if (data.message === "Token has expired or invalid token") handleLogout();
+      // console.log(data)
 
       setCurrentSession(data.newSession);
       setChapters(data.allSessions);

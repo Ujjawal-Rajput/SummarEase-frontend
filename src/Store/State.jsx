@@ -75,6 +75,11 @@ export const messageResponseAtom = atom({
     default: []
 })
 
+export const messagesHistoryAtom = atom({
+    key: "messagesHistoryAtom",
+    default: []
+})
+
 
 // {
 //     id:1234,

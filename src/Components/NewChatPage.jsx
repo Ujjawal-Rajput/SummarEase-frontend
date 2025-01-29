@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { chaptersAtom, messageResponseAtom, currentSessionAtom, responseTopic } from '../Store/State';
+import { useSetRecoilState } from 'recoil';
+import { chaptersAtom, messageResponseAtom, currentSessionAtom, responseTopic, messagesHistoryAtom } from '../Store/State';
 import { useLogout } from '../Utils/LogoutHandler';
 
 const NewChatPage = () => {
@@ -12,12 +12,14 @@ const NewChatPage = () => {
     const setResponseTopic = useSetRecoilState(responseTopic);
     const apiCalled = useRef(false); // To track if API call has been made
     const handleLogout = useLogout();
+    const setMessagesHistory = useSetRecoilState(messagesHistoryAtom);
 
     useEffect(() => {
         const handleNewChat = async () => {
             if (apiCalled.current) return; // Prevent duplicate calls
             apiCalled.current = true;
             setMessages([]); // Clear the previous messages
+            setMessagesHistory([]); // Clear messages history
             const token = JSON.parse(localStorage.getItem('auth'))?.token;
             // console.log(token);
 
@@ -26,25 +28,29 @@ const NewChatPage = () => {
             }
 
             try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/create-session`, {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/create-session`, { 
                     method: 'POST',
                     headers: {
                         'Authorization': token,
                     },
                 });
-                // console.log("printing...")
+                const data = await response.json();
 
-                if (!response.ok) {
-                    throw new Error('Failed to fetch sessions');
+                // Handle (401) Response
+                if (response.status === 401) {
+                    console.log(data)
+                    handleLogout(); // Logout the user
+                    return;
                 }
 
-                const data = await response.json();
-                if (data.message === "Token has expired or invalid token") handleLogout();
+                // if (data.message === "Token has expired or invalid token") handleLogout();
+                // console.log(data)
 
                 // Set current session and chapters
                 setCurrentSession(data.newSession);
                 setChapters(data.allSessions);
                 setResponseTopic('Ask-ai');
+
                 // Navigate to the new session page
                 navigate(`/c/${data.newSession.sessionId}`);
             } catch (error) {
@@ -52,11 +58,10 @@ const NewChatPage = () => {
             }
         };
 
-        // Trigger the function when the page loads
         handleNewChat();
-    }, []); // Empty dependency array ensures it runs only once on component mount
+    }, []); 
 
-    return <div>Loading new chat...</div>; // You can show a loading spinner or message here
+    return <div>Loading new chat...</div>; 
 };
 
 export default NewChatPage;

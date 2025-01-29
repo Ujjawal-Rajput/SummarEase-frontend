@@ -36,15 +36,18 @@ const SidebarSessions = () => {
                         'Authorization': token,
                     },
                 });
-
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch sessions');
-                }
-
                 const data = await response.json();
 
-                if (data.message == "Token has expired or invalid token") handleLogout();
+
+                // Handle (401) Response
+                if (response.status === 401) {
+                    console.log(data)
+                    handleLogout(); // Logout the user
+                    return;
+                }
+
+
+                // if (data.message == "Token has expired or invalid token") handleLogout();
                 // console.log(data)
                 setChapters(data.sessions);
 
@@ -69,7 +72,7 @@ const SidebarSessions = () => {
                                 > */}
                                     <button className={session.sessionId === activeSessionId ? 'chapter-button active-chapter' : 'chapter-button'} onClick={()=>navigate(`/c/${session.sessionId}`)}>
                                         <MessageSquare size={16} />
-                                        <span>{session.title.length > 20 ? session.title.slice(0, 20) + "..." : session.title }</span>
+                                        <span>{session.title && session.title.length > 20 ? session.title.slice(0, 20) + "..." : session.title }</span>
                                     </button>
                             </li>
                             // <li key={session.sessionId} className='chapter-button'>
