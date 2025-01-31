@@ -32,9 +32,9 @@ function GetSessionMessages() {
         scrollToBottom();
     }, [messages]);
 
-    useEffect(() => {
-        setMessagesHistory(tempMessages); // Update Recoil state outside rendering
-      }, [tempMessages, setMessagesHistory]); // Runs whenever `tempMessages` changes
+    // useEffect(() => {
+    //     setMessagesHistory(tempMessages); // Update Recoil state outside rendering
+    //   }, [tempMessages, setMessagesHistory]); // Runs whenever `tempMessages` changes
 
     useEffect(() => {
         const fetchMessages = async () => {
@@ -53,19 +53,20 @@ function GetSessionMessages() {
                     const data = await response.json();
                     // console.log(data)
                     if (data.error === "Session has expired") handleLogout();
-                    
+
                     //update messages
                     setMessages(data.message || []); // Assuming messages are in the 'messages' field
-                    
+
                     //update messages history
+                    const tempVariable = [];
                     data.message.forEach((message) => {
-                        const newItem = [
-                          { 'role': "user", 'parts': message.message },
-                          { 'role': "model", 'parts': message.response },
-                        ];
-                        setTempMessages((prevArray) => [...prevArray, ...newItem]); // Update tempMessages
-                      });
-                    
+                        tempVariable.push(
+                            { role: "user", parts: message.message },
+                            { role: "model", parts: message.response }
+                        );
+                    })
+                    setMessagesHistory(tempVariable);
+
 
                     // console.log(data.message)
                     setCurrentSessionId({
@@ -111,7 +112,7 @@ function GetSessionMessages() {
 
 
     if (error) {
-        return <SessionNotFoundError message={error}/>  // Render the error page
+        return <SessionNotFoundError message={error} />  // Render the error page
     }
 
     else {
@@ -131,7 +132,7 @@ function GetSessionMessages() {
                             <div key={index} >
                                 <div className="message-wrapper user-message">
                                     <div className='user-message-icon'>
-                                        <User/>
+                                        <User />
                                     </div>
                                     <div className="message">
                                         {message.files.length > 0 && <div className='document-present'>.{message.files[0].split('.')[1]} document present </div>}
@@ -141,13 +142,13 @@ function GetSessionMessages() {
                                 </div>
                                 <div className="message-wrapper assistant-message">
                                     <div className='assistant-message-icon'>
-                                        <Bot/>
+                                        <Bot />
                                     </div>
                                     <div className="message">
-                                        {message.topic === 'Quiz' && <Quiz response={message.response} topic={message.topic} /> }
-                                        {message.topic === 'Flashcard' && <FlashCard response={message.response} topic={message.topic} /> }
-                                        {(message.topic === 'Ask-ai' || message.topic === 'Summarize' || message.topic === 'Code') && <AiResponse response={message.response} /> }
-                                        
+                                        {message.topic === 'Quiz' && <Quiz response={message.response} topic={message.topic} />}
+                                        {message.topic === 'Flashcard' && <FlashCard response={message.response} topic={message.topic} />}
+                                        {(message.topic === 'Ask-ai' || message.topic === 'Summarize' || message.topic === 'Code') && <AiResponse response={message.response} />}
+
                                     </div>
                                 </div>
                             </div>

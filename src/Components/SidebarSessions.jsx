@@ -1,7 +1,7 @@
 // Sidebar.js
 import React, { useEffect } from 'react';
 import {  useSetRecoilState, useRecoilState } from 'recoil';
-import { chaptersAtom } from '../Store/State';
+import { chaptersAtom, messagesHistoryAtom } from '../Store/State';
 import { MessageSquare } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useLogout } from '../Utils/LogoutHandler';
@@ -13,6 +13,7 @@ const SidebarSessions = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const handleLogout = useLogout();
+    const setMessagesHistory = useSetRecoilState(messagesHistoryAtom);
 
     // const handleNewChat = () => {
     //     const sessionId = generateSessionId(); 
@@ -70,7 +71,11 @@ const SidebarSessions = () => {
                                 {/* <a href={activeSessionId === session.sessionId.toString() ? '#' : `/c/${session.sessionId}`}
                                     
                                 > */}
-                                    <button className={session.sessionId === activeSessionId ? 'chapter-button active-chapter' : 'chapter-button'} onClick={()=>navigate(`/c/${session.sessionId}`)}>
+                                    <button disabled={session.sessionId === activeSessionId} className={session.sessionId === activeSessionId ? 'chapter-button active-chapter' : 'chapter-button'} onClick={()=>{
+                                        setMessagesHistory([]);
+                                        console.log("history reset")
+                                        navigate(`/c/${session.sessionId}`)
+                                    }}>
                                         <MessageSquare size={16} />
                                         <span>{session.title && session.title.length > 20 ? session.title.slice(0, 20) + "..." : session.title }</span>
                                     </button>
